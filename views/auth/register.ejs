@@ -1,0 +1,11 @@
+<h1>Register</h1>
+<form action="/auth/register" method="post">
+    <label>Email adress:<input type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required></label>
+    <label>Username:<input type="text" name="username" required></label>
+    <label>Password:<input type="password" name="password" required></label>
+    <button type="submit">Register for free!</button>
+</form>
+
+<% if (typeof errorMessage !== 'undefined') { %>
+ <p><%- errorMessage %></p>
+<% } %>
