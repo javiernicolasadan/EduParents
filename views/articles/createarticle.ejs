@@ -1,8 +1,8 @@
 
 
 <h1>Create Article</h1>
-<form action="/articles/createarticle" method="post">
-    <label>Title<input type="text" name="Title" required></label>
+<form action="/articles/create" method="post">
+    <label>Title<input type="text" name="title" required></label>
 
     <label>Age Range:<select name="ageRange">
         <option value="Pregnancy">Pregnancy</option>
@@ -13,7 +13,7 @@
         <option value="19-24Months">19-24 Months</option>
         </select>
         </label>
-    <label>Content<input placeholder="max500caracters" type="text" name="Content " required></label>
-    <label>Link<input type="text"  name="Link "></label>
+    <label>Content<input placeholder="max500caracters" type="text" name="content" required></label>
+    <label>Link<input type="text"  name="link"></label>
     <button type="submit">Create your article</button>
 </form>

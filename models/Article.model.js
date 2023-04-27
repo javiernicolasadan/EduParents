@@ -17,11 +17,12 @@ const articleSchema = new Schema(
         },
         link: {
             type: String, 
-            validate:{
+            required: false,
+           /*   validate:{
                 validator: function(v) {
                 return /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/.test(v);   
                 }
-            }
+            }  */
        }
     },
       {
