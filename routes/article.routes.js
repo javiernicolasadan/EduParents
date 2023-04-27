@@ -14,7 +14,7 @@ router.get("/",  async (req, res, next) => {
   }
  });
 
- 
+
 
 /* GET create page */
 router.get("/create", (req, res, next) => {
@@ -33,9 +33,24 @@ router.post("/create", async(req, res, next) => {
     //console.log({...req.body})
   } catch (error) {
     console.log(error)
-    
   }
-
 })
+
+/* GET one recipe */
+router.get('/:articleId', async (req, res) => {
+  const { articleId } = req.params
+ try {
+   const article = await Article.findById(articleId)
+   console.log(article)
+   
+    if (!article) {
+     res.redirect('/articles')
+   } else {
+     res.render('articles/onearticle', article)
+   } 
+ } catch (error) {
+   console.log(error)
+ }
+})  
 
 module.exports = router;
