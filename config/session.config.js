@@ -15,13 +15,11 @@ module.exports = app => {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
-        maxAge: 3600000 // 60 * 1000 ms === 1 min
+        maxAge: 3600000 // 1 hour
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/project2"
  
-        // ttl => time to live
-        // ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day
       })
     })
   );
