@@ -3,11 +3,19 @@ const Article = require('../models/Article.model');
 const router = express.Router();
 
 
-router.get("/",  (req, res, next) => {
-  res.render("articles/allarticles")
+/*GET all articles*/
+router.get("/",  async (req, res, next) => {
+  try {
+    const allArticles = await Article.find()
+    console.log(allArticles)
+    res.render("articles/allarticles", {data: allArticles})
+  } catch (error) {
+    console.log(error)
+  }
  });
 
  
+
 /* GET create page */
 router.get("/create", (req, res, next) => {
   res.render("articles/createarticle");
