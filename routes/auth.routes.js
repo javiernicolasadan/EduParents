@@ -47,8 +47,18 @@ router.get("/login", (req, res, next) => {
   });
 
   /* POST login */
-router.post("/login", (req, res, next) => {
-
+router.post("/login", async(req, res, next) => {
+  const existingUser = await User.findOne({email: req.body.email})
+  if (!existingUser){
+    res.render('auth/login', {errorMessage: 'This email is not registered. Please go to the Register page', data: {email: req.body.email}})
+  }else{//if the user exists
+    //check if password is right
+    if (bcryptjs.compareSync(req.body.password, existingUser.passwordHash)){//if password is correct
+      res.render('profile', {username: existingUser.username})
+    }else{//if password is wrong
+      res.render('auth/login', {errorMessage: 'The password does not match our records', data: {email: req.body.email}})
+    }
+  }
 });
 
 
