@@ -26,8 +26,8 @@ router.post("/create", async(req, res, next) => {
   try {
     const newArticle = await Article.create(req.body)
     console.log(newArticle)
-    res.redirect("/articles") 
-    //console.log({...req.body})
+    const {_id} = newArticle
+    res.redirect(`/articles/${_id}`) 
   } catch (error) {
     console.log(error)
   }
@@ -39,7 +39,7 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", {articleToEdit})
 })
 
-router.post("/edited/:articleId", async (req, res) => {
+router.post("/edit-/:articleId", async (req, res) => {
   const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, req.body, {new: true})
   //console.log(updatedArt)
   res.redirect(`/articles/${req.params.articleId}` )

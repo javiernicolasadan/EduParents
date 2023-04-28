@@ -26,6 +26,8 @@ const articleSchema = new Schema(
             }  
         },
         
+        
+        
     },
       {
        timestamps: true,
