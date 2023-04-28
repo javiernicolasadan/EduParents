@@ -12,7 +12,7 @@ const articleSchema = new Schema(
         },
         content: {
             type: String, 
-            maxlength: 500,
+            maxlength: 1000,
             required: true,
         },
         link: {
@@ -24,7 +24,8 @@ const articleSchema = new Schema(
                 }
                 return /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/.test(v); 
             }  
-       }
+        },
+        
     },
       {
        timestamps: true,
