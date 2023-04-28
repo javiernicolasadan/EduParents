@@ -25,9 +25,10 @@ const articleSchema = new Schema(
                 return /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/.test(v); 
             }  
         },
-        
-        
-        
+        createdBy:{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     },
       {
        timestamps: true,

@@ -1,6 +1,7 @@
 const express = require('express');
 const {isLoggedIn} = require('../middleware/route.guard')
 const router = express.Router();
+const User = require ('../models/User.model')
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -8,9 +9,16 @@ router.get("/", (req, res, next) => {
 });
 
 /* GET profile page */
-router.get("/profile",isLoggedIn, (req, res, next) => {
-  console.log(req.session)
-  res.render("profile", {existingUser: req.session.existingUser});
+router.get("/profile",isLoggedIn, async(req, res, next) => {
+  try{
+    console.log(req.session)
+    const currentUser = await User.findOne({username: req.session.existingUser.existingUser}).populate('articles')
+    console.log(currentUser)
+    res.render("profile", {currentUser});
+  }
+  catch(error){
+    console.log(error)
+  }
 });
 
 router.get('/logout', (req, res, next) => {

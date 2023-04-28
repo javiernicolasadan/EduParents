@@ -5,7 +5,7 @@
         </div>
 
         <div class="profileInfo">
-            <h1>Welcome back <%= existingUser.existingUser %></h1>
+            <h1>Welcome back <%= currentUser.username %></h1>
         <a href="/logout">Log Out</a>
         </div>
     </div>
@@ -13,4 +13,5 @@
 </section>
 <section>
     <a href="/articles/create">Create your post</a>
+    <h1>Articles<%= currentUser.articles[0].title %></h1>
 </section>

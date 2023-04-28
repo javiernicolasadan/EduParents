@@ -2,6 +2,7 @@ const express = require('express');
 const Article = require('../models/Article.model');
 const router = express.Router();
 const {isLoggedIn} = require('../middleware/route.guard')
+const User = require('../models/User.model');
 
 
 /*GET all articles*/
@@ -24,9 +25,11 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 //post create
 router.post("/create", async(req, res, next) => {
   try {
-    const newArticle = await Article.create(req.body)
-    console.log(newArticle)
+    const ownerUser = req.session.existingUser.existingUser
+    const ownerId = await User.findOne({username: ownerUser})
+    const newArticle = await Article.create({...req.body, createdBy: ownerId})
     const {_id} = newArticle
+    await User.findByIdAndUpdate(ownerId, {$push: {articles:newArticle}}, {new:true})
     res.redirect(`/articles/${_id}`) 
   } catch (error) {
     console.log(error)
@@ -45,11 +48,12 @@ router.post("/edit-/:articleId", async (req, res) => {
   res.redirect(`/articles/${req.params.articleId}` )
 })
 
+
 /* GET one articl */
 router.get('/:articleId', async (req, res) => {
   const { articleId } = req.params
  try {
-   const article = await Article.findById(articleId)
+   const article = await Article.findById(articleId).populate('createdBy', 'username')
    /* console.log(article) */
      if (!article) {
      res.redirect('/articles')
