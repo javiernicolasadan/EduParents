@@ -4,13 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title><%= appTitle %></title>
+    <title>EduParents</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
+  <nav>
+    
+    <div class="homepage-nav">
+      <span>EduParents</span>
+      <span>HomePage</span>
+      <img src="/images/home-icon.png" alt="home">
+    </div>
+    <div class="credentials-nav">
+      <a href="/auth/login">Log In</a>
+      <a href="/auth/register">Register</a>
+    </div>
+  </nav>
 
   <body>
     <%- body %>
-
     <script src="/js/script.js"></script>
   </body>
 </html>

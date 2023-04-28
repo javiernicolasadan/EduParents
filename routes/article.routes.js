@@ -1,6 +1,7 @@
 const express = require('express');
 const Article = require('../models/Article.model');
 const router = express.Router();
+const {isLoggedIn} = require('../middleware/route.guard')
 
 
 /*GET all articles*/
@@ -15,9 +16,8 @@ router.get("/",  async (req, res, next) => {
  });
 
 
-
 /* GET create page */
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("articles/createarticle");
 });
 
