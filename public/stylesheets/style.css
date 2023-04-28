@@ -3,6 +3,7 @@
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
+  margin-bottom: 5rem;
 }
 
 body > *{
@@ -17,45 +18,40 @@ h1, h2{
 nav{
   display: flex;
   align-items: center;
-  background-color: #733238;
-  height: 3rem;
+  height: 6rem;
   justify-content: space-between;
-}
-
-.credentials-nav a{
-  padding: 0.3rem;
-  background-color: #D9A679;
-  border-radius: 0.5rem;
-  color: #733238;
-  text-decoration: none;
-}
-
-.credentials-nav a:last-child {
-  margin-left: 1rem;
 }
 
 
 .homepage-nav{
   display: flex;
+  justify-content: space-between;
   align-items: center;
   /* background-color: #D9A679; */
   border-radius: 0.5rem;
   padding: 0.1rem 0.3rem;
-  color: #D9A679;
   font-weight: bold;
 }
 
 .homepage-nav img{
-  height: 1.5rem;
+  height: 5rem;
   margin-left: 0.5rem;
 }
 
 header{
-  height: 50vh;
-  background-image: url('../images/cover.jpeg');
+  height: 70vh;
+  background-image: url('../images/coverPic.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-color: grey;
+}
+
+.credentials-nav a{
+  background-color: rgb(197, 148, 167);
+  margin: 0 0.3rem;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
 }
 
 #artByAge{
@@ -81,7 +77,6 @@ header{
   width: 25rem;
   margin-top: 2rem;
   text-align: center;
-  border-radius: 2rem;
   padding-bottom: 0.3rem;
 }
 

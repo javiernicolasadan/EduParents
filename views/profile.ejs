@@ -13,5 +13,8 @@
 </section>
 <section>
     <a href="/articles/create">Create your post</a>
-    <h1>Articles<%= currentUser.articles[0].title %></h1>
+    <% if (currentUser.articles[0]) { %>
+        <h1>Articles<%= currentUser.articles[0].title %></h1>
+    <% } %>
+    
 </section>
