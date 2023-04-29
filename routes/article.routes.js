@@ -23,7 +23,7 @@ router.get("/create", (req, res, next) => {
 router.post("/create", async(req, res, next) => {
   try {
     const newArticle = await Article.create(req.body)
-    console.log(newArticle)
+    /* console.log(newArticle) */
     res.redirect("/articles") 
     //console.log({...req.body})
   } catch (error) {
