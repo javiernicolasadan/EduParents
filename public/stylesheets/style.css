@@ -1,12 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  margin-bottom: 5rem;
+}
+
+body > *{
+  padding: 0 2vw;
+  text-decoration: none;
+}
+
+h1, h2{
+  margin: 0;
+}
+
+nav{
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  justify-content: space-between;
+}
+
+
+.homepage-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #D9A679; */
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.3rem;
+  font-weight: bold;
+}
+
+.homepage-nav img{
+  height: 5rem;
+  margin-left: 0.5rem;
+}
+
+header{
+  height: 70vh;
+  background-image: url('../images/coverPic.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: grey;
+}
+
+.credentials-nav a{
+  background-color: rgb(197, 148, 167);
+  margin: 0 0.3rem;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+#artByAge{
+  padding-top: 2%;
+
+  text-align: center;
+}
+
+.articlesHomepage{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.home-container img{
+  max-width: 95%;
+  border-radius: 2rem;
+}
+
+.home-container{
+  background-color: #D9A679;
+  width: 25rem;
+  margin-top: 2rem;
+  text-align: center;
+  padding-bottom: 0.3rem;
 }
 
 a {
-  color: #00b7ff;
+text-decoration: none;
 }
 
-h1 {
-  color: 15px;
+h3{
+  color: white;
 }
+
+.profile{
+  margin-top: 2rem;
+  background-color: #D9A679;
+  display: flex;
+  border-radius: 2rem;
+  height: 15rem;
+}
+
+.profilePic{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  background-color: #D96907;
+  border-radius: 2rem;
+}
+
+.profilePic img{
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 2rem;
+}
+
+
+
+
+

@@ -1,2 +1,20 @@
-<h1>profile of <%= existingUser.existingUser %></h1>
-<a href="/logout">Log Out</a>
+<section>
+    <div class="profile">
+        <div class="profilePic">
+            <img src="/images/profilePic.jpg" alt="">
+        </div>
+
+        <div class="profileInfo">
+            <h1>Welcome back <%= currentUser.username %></h1>
+        <a href="/logout">Log Out</a>
+        </div>
+    </div>
+    <div></div>
+</section>
+<section>
+    <a href="/articles/create">Create your post</a>
+    <% if (currentUser.articles[0]) { %>
+        <h1>Articles<%= currentUser.articles[0].title %></h1>
+    <% } %>
+    
+</section>

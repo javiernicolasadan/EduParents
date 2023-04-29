@@ -55,6 +55,7 @@ router.post("/login", async(req, res, next) => {
     //check if password is right
     if (bcryptjs.compareSync(req.body.password, existingUser.passwordHash)){//if password is correct
       req.session.existingUser = {existingUser: existingUser.username}
+      console.log('finalTest', req.session.existingUser)
       res.redirect('/profile')
     }else{//if password is wrong
       res.render('auth/login', {errorMessage: 'The password does not match our records', data: {email: req.body.email}})

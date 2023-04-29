@@ -19,6 +19,10 @@ const userSchema = new Schema(
     passwordHash: {
       type: String,
       required: true
+    },
+    articles: {
+      type:[Schema.Types.ObjectId],
+      ref: 'Article'
     }
   },
   {

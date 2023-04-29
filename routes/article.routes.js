@@ -1,6 +1,8 @@
 const express = require('express');
 const Article = require('../models/Article.model');
 const router = express.Router();
+const {isLoggedIn} = require('../middleware/route.guard')
+const User = require('../models/User.model');
 
 
 /*GET all articles*/
@@ -14,18 +16,21 @@ router.get("/",  async (req, res, next) => {
   }
  });
 
+
 /* GET create page */
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("articles/createarticle");
 });
 
 //post create
 router.post("/create", async(req, res, next) => {
   try {
-    const newArticle = await Article.create(req.body)
-    /* console.log(newArticle) */
-    res.redirect("/articles") 
-    //console.log({...req.body})
+    const ownerUser = req.session.existingUser.existingUser
+    const ownerId = await User.findOne({username: ownerUser})
+    const newArticle = await Article.create({...req.body, createdBy: ownerId})
+    const {_id} = newArticle
+    await User.findByIdAndUpdate(ownerId, {$push: {articles:newArticle}}, {new:true})
+    res.redirect(`/articles/${_id}`) 
   } catch (error) {
     console.log(error)
   }
@@ -37,17 +42,18 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", {articleToEdit})
 })
 
-router.post("/edited/:articleId", async (req, res) => {
+router.post("/edit-/:articleId", async (req, res) => {
   const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, req.body, {new: true})
   //console.log(updatedArt)
   res.redirect(`/articles/${req.params.articleId}` )
 })
 
+
 /* GET one articl */
 router.get('/:articleId', async (req, res) => {
   const { articleId } = req.params
  try {
-   const article = await Article.findById(articleId)
+   const article = await Article.findById(articleId).populate('createdBy', 'username')
    /* console.log(article) */
      if (!article) {
      res.redirect('/articles')
