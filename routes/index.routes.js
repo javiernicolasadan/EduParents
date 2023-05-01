@@ -2,10 +2,13 @@ const express = require('express');
 const {isLoggedIn} = require('../middleware/route.guard')
 const router = express.Router();
 const User = require ('../models/User.model')
+const Article = require ("../models/Article.model")
 
 /* GET home page */
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
+  
   res.render("index");
+  
 });
 
 /* GET profile page */
