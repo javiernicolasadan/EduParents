@@ -1,22 +1,22 @@
 const express = require('express');
-const {isLoggedIn} = require('../middleware/route.guard')
+const {isLoggedIn, isLoggedOut} = require('../middleware/route.guard')
 const router = express.Router();
 const User = require ('../models/User.model')
 const Article = require ("../models/Article.model")
 
 /* GET home page */
 router.get("/", async (req, res, next) => {
-  
   res.render("index");
+  
   
 });
 
 /* GET profile page */
 router.get("/profile",isLoggedIn, async(req, res, next) => {
   try{
-    console.log(req.session)
+    
     const currentUser = await User.findOne({username: req.session.existingUser.existingUser}).populate('articles')
-    console.log(currentUser)
+    
     res.render("profile", {currentUser});
   }
   catch(error){
