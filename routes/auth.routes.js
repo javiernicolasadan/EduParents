@@ -5,9 +5,14 @@ const bcryptjs = require ('bcryptjs')
 const saltRounds = 13
 const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/
 
+
 /* GET register */
 router.get("/register", (req, res, next) => {
-  res.render("auth/register");
+  let isLogged = false
+if(req.session.existingUser){
+    isLogged = true
+  }
+  res.render("auth/register", {isLogged});
 });
 
 /* POST register */
@@ -43,7 +48,11 @@ router.post("/register", async(req, res, next) => {
 
 /* GET login */
 router.get("/login", (req, res, next) => {
-    res.render("auth/login");
+  let isLogged = false
+if(req.session.existingUser){
+    isLogged = true
+  }
+    res.render("auth/login", {isLogged});
   });
 
   /* POST login */
@@ -55,7 +64,6 @@ router.post("/login", async(req, res, next) => {
     //check if password is right
     if (bcryptjs.compareSync(req.body.password, existingUser.passwordHash)){//if password is correct
       req.session.existingUser = {existingUser: existingUser.username}
-      console.log('finalTest', req.session.existingUser)
       res.redirect('/profile')
     }else{//if password is wrong
       res.render('auth/login', {errorMessage: 'The password does not match our records', data: {email: req.body.email}})
