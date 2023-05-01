@@ -3,7 +3,7 @@
     <% data.forEach((article) => { %>
     <li>
       <h4><%= article.title %></h4>
-      <a href=<%- `/articles/${article.id}` %>>Details</a>
+      <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>Details</a>
     </li>
     <% }) %>
   </ul>
