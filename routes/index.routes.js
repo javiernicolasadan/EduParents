@@ -1,11 +1,12 @@
 const express = require('express');
 const {isLoggedIn} = require('../middleware/route.guard')
+const {isLoggedOut} = require('../middleware/route.guard')
 const router = express.Router();
 const User = require ('../models/User.model')
 
 /* GET home page */
 router.get("/", (req, res, next) => {
-  res.render("index");
+  res.render("index", {isLoggedIn});
 });
 
 /* GET profile page */
