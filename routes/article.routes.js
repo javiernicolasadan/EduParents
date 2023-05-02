@@ -9,35 +9,48 @@ const defaultImageUrl = "https://acortar.link/0n4qLw"
 
 /* GET create page */
 router.get("/create", isLoggedIn, (req, res, next) => {
-  res.render("articles/createarticle");
+  let isLogged = false
+  if(req.session.existingUser){
+      isLogged = true
+    }
+  res.render("articles/createarticle", {isLogged});
 });
 
 //post create
-router.post("/create", uploader.single("imageUrl"), async(req, res, next) => {
+// POST create
+router.post("/create", isLoggedIn, uploader.single("imageUrl"), async (req, res, next) => {
   try {
-    const ownerUser = req.session.existingUser.existingUser
-    const ownerId = await User.findOne({username: ownerUser})
+    let isLogged = false;
+    if (req.session.existingUser) {
+      isLogged = true;
+    }
+    const ownerUser = req.session.existingUser.existingUser;
+    const ownerId = await User.findOne({ username: ownerUser });
     let imageUrl;
     if (req.file) {
-      imageUrl = req.file.path
+      imageUrl = req.file.path;
     } else {
-      imageUrl = defaultImageUrl
+      imageUrl = defaultImageUrl;
     }
-    const newArticle = await Article.create({...req.body, createdBy: ownerId, imageUrl: imageUrl})
-    const {_id} = newArticle
-    const {ageRange} = newArticle
-    await User.findByIdAndUpdate(ownerId, {$push: {articles:newArticle}}, {new:true})
-    res.redirect(`/articles/${ageRange}/${_id}`) 
+    const newArticle = await Article.create({ ...req.body, createdBy: ownerId, imageUrl: imageUrl });
+    const { _id, ageRange } = newArticle;
+    await User.findByIdAndUpdate(ownerId, { $push: { articles: newArticle } }, { new: true });
+    res.redirect(`/articles/${ageRange}/${_id}`);
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    next(error); // si ocurre un error, lo pasamos al siguiente middleware
   }
-})
+});
 
 
 /*GET edits articles*/
 router.get("/edit-article/:articleId", async (req, res) => {
+  let isLogged = false
+  if(req.session.existingUser){
+      isLogged = true
+    }
   const articleToEdit = await Article.findById(req.params.articleId)
-  res.render("articles/editarticle", {articleToEdit})
+  res.render("articles/editarticle", {articleToEdit, isLogged})
 })
 
 router.post("/edit-article/:articleId", async (req, res) => {
@@ -48,8 +61,12 @@ router.post("/edit-article/:articleId", async (req, res) => {
 /*GET all articles*/
 router.get("/:ageRange",  async (req, res, next) => {
   try {
+    let isLogged = false
+  if(req.session.existingUser){
+      isLogged = true
+    }
     const allArticles = await Article.find(req.params)
-    res.render("articles/allarticles", {data: allArticles})
+    res.render("articles/allarticles", {data: allArticles, isLogged})
   } catch (error) {
     console.log(error)
   }
@@ -67,17 +84,39 @@ router.get('/:articleId/delete', async (req, res) => {
 
 /* GET one article */
 router.get('/:ageRange/:articleId', async (req, res) => {
-  const { articleId } = req.params
- try {
-   const article = await Article.findById(articleId).populate('createdBy', 'username')
-     if (!article) {
-     res.redirect('/articles')
-   } else {
-     res.render('articles/onearticle', article)
-   } 
- } catch (error) {
-   console.log(error)
- }
-})  
+  try {
+    let isLogged = false;
+    if (req.session.existingUser) {
+      isLogged = true;
+    }
+    const article = await Article.findById(req.params.articleId).populate('createdBy', 'username');
+    if (!article) {
+      res.redirect('/articles');
+    } else {
+      res.render('articles/onearticle', { article: article, isLogged });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+function validateLink() {
+  const linkInput = document.getElementsByName('link')[0];
+  const linkValue = linkInput.value;
+
+  const regex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/;
+  const isValidLink = regex.test(linkValue);
+
+  if (!isValidLink) {
+    const errorMessage = 'Please enter a valid link.';
+    const errorSpan = document.createElement('span');
+    errorSpan.textContent = errorMessage;
+    errorSpan.classList.add('error-message');
+    linkInput.parentNode.insertBefore(errorSpan, linkInput.nextSibling);
+    return false;
+  }
+
+  return true;
+}
 
 module.exports = router;

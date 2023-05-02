@@ -1,13 +1,13 @@
 <h1>One article</h1>
-<%= title  %>
+<%= article.title  %>
 <br>
 <br>
-<%= content  %>
-<img src="<%=imageUrl%>" alt="imageArticle">
+<%= article.content  %>
+<img src="<%=article.imageUrl%>" alt="imageArticle">
 <br>
-<a href="/articles/edit-article/<%=_id %>">Update Article</a>
-<a href="/articles/<%=_id%>/delete">Delete Article</a>
- <p>Created by: <%= createdBy.username %></p> 
+<a href="/articles/edit-article/<%=article._id %>">Update Article</a>
+<a href="/articles/<%=article._id%>/delete">Delete Article</a>
+ <p>Created by: <%= article.createdBy.username %></p> 
 
 
 

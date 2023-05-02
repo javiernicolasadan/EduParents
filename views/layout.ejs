@@ -18,7 +18,7 @@
       <!-- If statement for logged in -->
     </div>
     <section>
-      <% if (isLogged) { %>
+      <% if (typeof isLogged !== 'undefined') { %>
        <p>hello</p>
       <% } else { %>
         <p>bye</p>
