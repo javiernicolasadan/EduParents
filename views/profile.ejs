@@ -1,18 +1,44 @@
 <section>
     <div class="profile">
         <div class="profilePic">
-            <img src="/images/profilePic.jpg" alt="">
+            <img src="/images/profilePicDef.png" alt="">
         </div>
 
         <div class="profileInfo">
             <h1>Welcome back <%= currentUser.username %></h1>
-        <a href="/logout">Log Out</a>
+            <h4>Username: <%= currentUser.username %></h4>
+            <h4>Email address: <%= currentUser.email %></h4>
+            <h4>Articles created: <%= currentUser.articles.length %></h4>
+            <a href="/logout">Log Out</a>
         </div>
     </div>
 </section>
 <section>
-    <a href="/articles/create">Create your post</a>
-    <% if (currentUser.articles[0]) { %>
-        <h1>Articles<%= currentUser.articles[0].title %></h1>
-    <% } %>
+
+    <h1 class="profile-section">Your created articles</h1>
+    <div class="articlesHomepage">
+        <div class="add-container">
+            <h4>Create new article</h4>
+            <a href="/articles/create">
+                <img src="/images/addArt.png" alt="">
+            </a>
+        </div>
+        
+        <% if (currentUser.articles[0]) { %>
+            <% currentUser.articles.forEach(article => { %>
+                <div class="home-container">
+                    <div>
+                        <h3><%= article.title %></h3>
+                        <a href="/articles/<%=article._id%>/delete">Delete Article</a>
+                    </div>
+                    
+                    <img src="<%= article.imageUrl %>" alt="">
+                </div>
+            <% }) %>
+            
+        <% }else{ %>
+            <h2>Your articles section is empty</h2>
+        <% } %>
+    </div>
+    
 </section>
