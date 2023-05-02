@@ -148,6 +148,22 @@ h3{
   margin: 2rem 0 1rem 0;
 }
 
+.profile-container-function{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.profile-container-function div a{
+  background-color: rgb(167, 167, 167);
+  padding: 0.2rem;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+
+
 .create-content{
   background-color: red;
   width: 80vw;

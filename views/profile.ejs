@@ -27,12 +27,19 @@
         <% if (currentUser.articles[0]) { %>
             <% currentUser.articles.forEach(article => { %>
                 <div class="home-container">
-                    <div>
+                    <div class="profile-container-function">
                         <h3><%= article.title %></h3>
-                        <a href="/articles/<%=article._id%>/delete">Delete Article</a>
+                        <div>
+                            <a href="/articles/<%=article._id%>/delete">Delete</a>
+                            <a href="/articles/edit-article/<%=article._id %>">Update</a>
+                        </div>
+                        
+                        
                     </div>
+                    <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>
+                        <img src="<%= article.imageUrl %>" alt="">
+                    </a>
                     
-                    <img src="<%= article.imageUrl %>" alt="">
                 </div>
             <% }) %>
             
