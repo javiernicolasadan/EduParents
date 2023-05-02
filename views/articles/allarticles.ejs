@@ -1,9 +1,10 @@
-<h1>All articles</h1>
-<ul>
+<h1><%= data[0].ageRange %> Articles</h1>
+<div class="articlesHomepage">
     <% data.forEach((article) => { %>
-    <li>
-      <h4><%= article.title %></h4>
-      <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>Details</a>
-    </li>
+      <div class="home-container">
+        <h4><%= article.title %></h4>
+        <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>Details</a>
+      </div>    
     <% }) %>
-  </ul>
+  </div>
+  

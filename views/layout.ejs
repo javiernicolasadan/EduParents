@@ -9,13 +9,20 @@
   </head>
   <nav>
     <div class="homepage-nav">
+      <a href="/">
         <img src="/images/logo.png" alt="">
+      </a>
     </div>
     <div class="credentials-nav">
       <a href="/">Home Page</a>
-      <a href="/auth/login">Log In</a>
-      <a href="/auth/register">Register</a>
       <!-- If statement for logged in -->
+      <% if (!!isLogged) { %>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Log Out</a>
+       <% } else { %>
+        <a href="/auth/login">Log In</a>
+        <a href="/auth/register">Register</a>
+         <% } %>
     </div>
    
 

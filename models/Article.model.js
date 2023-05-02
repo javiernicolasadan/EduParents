@@ -14,17 +14,23 @@ const articleSchema = new Schema(
         },
         content: {
             type: String, 
-            maxlength: 1000,
+            maxlength: 4000,
             required: true,
         },
         link: {
             type: String, 
             required: false,
-            validator: function(v) {
-                if (!v) { 
-                  return true; 
+            validator: function(link) {
+                if (typeof link === 'undefined') { 
+                    console.log(link)
+                    // Si el valor del enlace es nulo o indefinido, lo consideramos válido (retornamos true)
+                    return true; 
+                } else {
+                    console.log(link)
+                    // Si el valor del enlace existe, lo validamos con la expresión regular
+                    let linkRegex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/;
+                    return linkRegex.test(link);
                 }
-                return /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/.test(v); 
             }  
         },
         createdBy:{
