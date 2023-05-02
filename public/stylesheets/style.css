@@ -111,6 +111,20 @@ h3{
   border-radius: 2rem;
 }
 
+.create-content{
+  background-color: red;
+  width: 80vw;
+  height: 20rem;
+  vertical-align: top;
+  resize: vertical;
+  word-wrap: break-word;
+}
+.test{
+  background-color: blue;
+  width: 80vw;
+  height: 20rem; 
+}
+
 
 
 

@@ -1,11 +1,12 @@
 // middleware/route-guard.js
-
 // checks if the user is logged in when trying to access a specific page
 const isLoggedIn = (req, res, next) => {
     if (!req.session.existingUser) {
       return res.redirect('/auth/login');
+    }else{
+      next();
     }
-    next();
+    
   };
   
   // if an already logged in user tries to access the login page it
@@ -13,12 +14,15 @@ const isLoggedIn = (req, res, next) => {
   const isLoggedOut = (req, res, next) => {
     if (req.session.existingUser) {
       return res.redirect('/');
+    }else{
+      next();
     }
-    next();
+    
   };
   
   module.exports = {
     isLoggedIn,
     isLoggedOut
   };
+
   
