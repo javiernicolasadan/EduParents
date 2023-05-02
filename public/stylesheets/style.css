@@ -20,6 +20,7 @@ nav{
   align-items: center;
   height: 4.5rem;
   justify-content: space-between;
+  margin-top: 1rem;
 }
 
 img{
@@ -66,7 +67,7 @@ header{
 
 .articlesHomepage {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 2rem;
   align-items: center;
 }
@@ -81,7 +82,7 @@ header{
 }
 
 .add-container img{
-  width: 60%;
+  width: 40%;
   text-align: center;
   justify-self: center;
 }
@@ -146,6 +147,7 @@ h3{
 
 .profile-section{
   margin: 2rem 0 1rem 0;
+  color: black;
 }
 
 .profile-container-function{
@@ -162,21 +164,39 @@ h3{
   border-radius: 0.5rem;
 }
 
+.oneArticle{
+  display: flex;
+  flex-direction: row;
+}
 
+.oneArticle aside{
+  margin-top: 5%;
+  border-left: solid 1px lightgray;
+  width: 25vw;
+  padding: 0 2rem;
+}
+
+.articleDetails{
+  margin-right: 5%;
+  width: 75vw;
+}
+
+.articleDetails .header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.articleDetails img{
+  width: 100%;
+}
 
 .create-content{
-  background-color: red;
-  width: 80vw;
+  width: 90%;
   height: 20rem;
-  vertical-align: top;
-  resize: vertical;
-  word-wrap: break-word;
 }
-.test{
-  background-color: blue;
-  width: 80vw;
-  height: 20rem; 
-}
+
 
 
 

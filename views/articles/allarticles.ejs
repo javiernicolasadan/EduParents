@@ -1,9 +1,11 @@
-<h1><%= data[0].ageRange %> Articles</h1>
+<h1 class="profile-section"><%= data[0].ageRange %> Articles</h1>
 <div class="articlesHomepage">
     <% data.forEach((article) => { %>
       <div class="home-container">
-        <h4><%= article.title %></h4>
-        <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>Details</a>
+        <h3><%= article.title %></h3>
+        <a href=<%- `/articles/${article.ageRange}/${article.id}` %>>
+          <img src="<%= article.imageUrl %>" alt="">
+      </a>
       </div>    
     <% }) %>
   </div>
