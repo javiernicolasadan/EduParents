@@ -100,23 +100,6 @@ router.get('/:ageRange/:articleId', async (req, res) => {
   }
 });
 
-function validateLink() {
-  const linkInput = document.getElementsByName('link')[0];
-  const linkValue = linkInput.value;
 
-  const regex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*?$/;
-  const isValidLink = regex.test(linkValue);
-
-  if (!isValidLink) {
-    const errorMessage = 'Please enter a valid link.';
-    const errorSpan = document.createElement('span');
-    errorSpan.textContent = errorMessage;
-    errorSpan.classList.add('error-message');
-    linkInput.parentNode.insertBefore(errorSpan, linkInput.nextSibling);
-    return false;
-  }
-
-  return true;
-}
 
 module.exports = router;

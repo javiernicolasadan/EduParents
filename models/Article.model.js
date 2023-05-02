@@ -14,7 +14,7 @@ const articleSchema = new Schema(
         },
         content: {
             type: String, 
-            maxlength: 1000,
+            maxLength: 2000,
             required: true,
         },
         link: {
