@@ -7,8 +7,6 @@ const Article = require ("../models/Article.model")
 /* GET home page */
 router.get("/", async (req, res, next) => {
   res.render("index");
-  
-  
 });
 
 /* GET profile page */
