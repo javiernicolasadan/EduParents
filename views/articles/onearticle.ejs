@@ -1,13 +1,40 @@
-<h1>One article</h1>
-<%= article.title  %>
-<br>
-<br>
-<%= article.content  %>
-<img src="<%=article.imageUrl%>" alt="imageArticle">
-<br>
-<a href="/articles/edit-article/<%=article._id %>">Update Article</a>
-<a href="/articles/<%=article._id%>/delete">Delete Article</a>
- <p>Created by: <%= article.createdBy.username %></p> 
+<div class="oneArticle">
+
+<section class="articleDetails">
+    <div class="header">
+        <div>
+            <h1 class="profile-section">Title: <%= article.title  %></h1>
+            <h4>Created by: <%= article.createdBy.username %></h4> 
+        </div>
+
+        <div>
+            <% if (owner === currentUser) { %>
+                <a href="/articles/edit-article/<%=article._id %>">Update Article</a>
+                <a href="/articles/<%=article._id%>/delete">Delete Article</a>
+            <% } %>
+        </div>
+    </div>
+    
+    <img src="<%=article.imageUrl%>" alt="imageArticle">
+    <p><%= article.content  %></p>
+    <% if (article.link) { %>
+     <p>Useful link: <%= article.link %></p>
+    <% } %>
+</section>
+
+<aside>
+    <h4>More articles in this section</h4>
+    <ul>
+        <% allArticles.forEach(element => { %>
+            <li><a href=<%- `/articles/${element.ageRange}/${element.id}` %>><%= element.title %></a></li>
+        <% }) %>
+    </ul>
+        
+    
+</aside>
+
+</div>
+
 
 
 
