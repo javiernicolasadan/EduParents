@@ -86,20 +86,22 @@ router.get('/:articleId/delete', async (req, res) => {
 router.get('/:ageRange/:articleId', async (req, res) => {
   try {
     let isLogged = false;
+    let currentUser
     if (req.session.existingUser) {
       isLogged = true;
+      currentUser = req.session.existingUser.existingUser
     }
+    const allArticles = await Article.find({ageRange: req.params.ageRange})
     const article = await Article.findById(req.params.articleId).populate('createdBy', 'username');
+    const owner = article.createdBy.username
     if (!article) {
       res.redirect('/articles');
     } else {
-      res.render('articles/onearticle', { article: article, isLogged });
+      res.render('articles/onearticle', { article: article, isLogged, allArticles, owner, currentUser});
     }
   } catch (error) {
     console.log(error);
   }
 });
-
-
 
 module.exports = router;
