@@ -7,7 +7,11 @@
             <h4>Created by: <%= article.createdBy.username %></h4> 
         </div>
 
-        <div>
+        <div class="profile-container-function isOwner">
+            <form method="POST" action="/articles/fav/<%= article._id %>">
+                <button type="submit">Fav Article</button>
+            </form>
+
             <% if (owner === currentUser) { %>
                 <a href="/articles/edit-article/<%=article._id %>">Update Article</a>
                 <a href="/articles/<%=article._id%>/delete">Delete Article</a>

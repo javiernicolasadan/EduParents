@@ -13,10 +13,12 @@
         </div>
     </div>
 </section>
-<section>
 
+<section>
     <h1 class="profile-section">View all the sections</h1>
     <a href="/"><h4>Go to sections</h4></a>
+</section>
+<section>
     <h1 class="profile-section">Your created articles</h1>
     <div class="articlesHomepage">
         <div class="add-container">
@@ -49,5 +51,33 @@
             <h4>Your articles section is empty</h4>
         <% } %>
     </div>
-    
 </section>
+
+<section>
+    <h1 class="profile-section">Favorites</h1>
+    <div class="articlesHomepage">
+        
+        <% if (currentUser.favorites[0]) { %>
+            <% currentUser.favorites.forEach(fav => { %>
+                <div class="home-container">
+                    <div class="profile-container-function">
+                        <h3><%= fav.title %></h3>
+                    </div>
+                    
+                        <form method="POST" action="/articles/fav/<%= fav._id %>/remove">
+                            <button type="submit">Remove</button>
+                        </form>
+                
+                        
+                        <img src="<%= fav.imageUrl %>" alt="">
+                    </a>
+                    
+                </div>
+            <% }) %>
+            
+        <% }else{ %>
+            <h4>Your favorites section is empty</h4>
+        <% } %>
+    </div>
+</section>
+
