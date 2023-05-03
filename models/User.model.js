@@ -23,6 +23,10 @@ const userSchema = new Schema(
     articles: {
       type:[Schema.Types.ObjectId],
       ref: 'Article'
+    },
+    favorites:{
+      type:[Schema.Types.ObjectId],
+      ref: 'Article'
     }
   },
   {

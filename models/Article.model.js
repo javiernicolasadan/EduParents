@@ -1,7 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-
-
 const articleSchema = new Schema(
     {
         title: {
@@ -14,7 +12,7 @@ const articleSchema = new Schema(
         },
         content: {
             type: String, 
-            maxlength: 4000,
+            maxLength: 2000,
             required: true,
         },
         link: {
