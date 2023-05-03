@@ -1,35 +1,39 @@
-<div class="oneArticle">
-    <div class="articleDetails">
-        <h1>Create Article</h1>
-    <form action="/articles/create" method="post" enctype="multipart/form-data" onsubmit="return validateLink()">
-        <label>Title<input type="text" name="title" required></label>
-    
-        <label>Age Range:<select name="ageRange">
-            <option value="Pregnancy">Pregnancy</option>
-            <option value="Birth-1Month">Birth-1 Month</option>
-            <option value="2-6Months">2-6 Months</option>
-            <option value="7-12Months">7-12 Months</option>
-            <option value="13-18Months">13-18 Months</option>
-            <option value="19-24Months">19-24 Months</option>
-            </select>
-            </label>
-        <label>Link<input type="text"  name="link"></label>
-        <input type="file" name="imageUrl" accept="image/png, image/jpg">
-        <br>
-        <label>Content<textarea class="create-content" placeholder="max500caracters" type="text" name="content" required></textarea></label>
-        <br>
-        <label class="test">test
-            <input>
-        </label>
-        <br>
-        <button type="submit">Create your article</button>
+<h1 class="profile-section">Create Article</h1>
+<div>
+    <form action="/articles/create" method="post" enctype="multipart/form-data">
+       
+        <div class="form-input">
+            <label class="form-label">Title</label>
+            <input class="form-control" type="text" name="title" required>
+        </div>
+        
+        <div class="form-input">
+            <label class="form-label">Age Range</label>
+            <select name="ageRange" class="form-control" type="select">
+                <option value="Pregnancy">Pregnancy</option>
+                <option value="Birth-1Month">Birth-1 Month</option>
+                <option value="2-6Months">2-6 Months</option>
+                <option value="7-12Months">7-12 Months</option>
+                <option value="13-18Months">13-18 Months</option>
+                <option value="19-24Months">19-24 Months</option>
+                </select>
+        </div>
+
+        <div class="form-input">
+            <label class="form-label">Link</label>
+            <input type="text" name="link" class="form-control">
+        </div>
+
+        <div class="form-input">
+            <label class="form-label">Upload Image</label>
+            <input class="form-control" type="file" name="imageUrl" accept="image/png, image/jpg">
+        </div>
+
+        <div class="form-input">
+            <label class="form-label">Content</label>
+            <textarea class="form-control create-content" type="text" name="content" required placeholder="max 2000 characters"></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">Create your article</button>
     </form>
-    </div>
-
-    <aside>
-    </aside>
 </div>
-
-
-
-

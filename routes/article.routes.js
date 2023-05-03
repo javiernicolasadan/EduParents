@@ -16,7 +16,6 @@ router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("articles/createarticle", {isLogged});
 });
 
-//post create
 // POST create
 router.post("/create", isLoggedIn, uploader.single("imageUrl"), async (req, res, next) => {
   try {
@@ -42,6 +41,32 @@ router.post("/create", isLoggedIn, uploader.single("imageUrl"), async (req, res,
   }
 });
 
+/* POST one favorite */
+router.post('/fav/:articleId', async(req,res,next) =>{
+  const articleId = req.params.articleId
+  const favArt = await Article.findById(articleId)
+  const currentUser = req.session.existingUser.existingUser;
+  const currentUserData = await User.findOne({ username: currentUser });
+  console.log('currentUser', currentUser, 'CurrentUserData', currentUserData)
+  if(!currentUserData.favorites.includes(articleId)){
+    const updUserData = await User.findByIdAndUpdate(currentUserData._id, { $push: { favorites: favArt } }, { new: true })
+    console.log(updUserData)
+  }
+  res.redirect('/profile')
+})
+
+/* POST one favorite to delete */
+router.post('/fav/:articleId/remove', async (req, res) => {
+  try {
+    const currentUser = req.session.existingUser.existingUser;
+    const currentUserData = await User.findOne({ username: currentUser });
+    const articleId = req.params.articleId;
+    await User.findByIdAndUpdate(currentUserData._id, { $pull: { favorites: articleId } }, { new: true });
+    res.redirect('/profile')
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 /*GET edits articles*/
 router.get("/edit-article/:articleId", async (req, res) => {
@@ -53,7 +78,8 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", {articleToEdit, isLogged})
 })
 
-router.post("/edit-article/:articleId", async (req, res) => {
+router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"), async (req, res) => {
+  const ageRange = req.params.ageRange
   const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, req.body, {new: true})
   res.redirect(`/articles/${req.params.ageRange}/${req.params.articleId}`)
 })
