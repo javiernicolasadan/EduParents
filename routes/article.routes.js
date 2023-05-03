@@ -80,7 +80,9 @@ router.get("/edit-article/:articleId", async (req, res) => {
 
 router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"), async (req, res) => {
   const ageRange = req.params.ageRange
-  const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, req.body, {new: true})
+  const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, {...req.body, imageUrl: req.file.path}, {new: true})
+  console.log("estebueno", updatedArt)
+  
   res.redirect(`/articles/${req.params.ageRange}/${req.params.articleId}`)
 })
 
