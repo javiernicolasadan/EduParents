@@ -18,6 +18,7 @@ const articleSchema = new Schema(
         link: {
             type: String, 
             required: false,
+            
             validator: function(link) {
                 if (typeof link === 'undefined') { 
                     console.log(link)
@@ -42,6 +43,7 @@ const articleSchema = new Schema(
     },
       {
        timestamps: true,
+       
       },
     );
     
