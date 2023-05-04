@@ -4,7 +4,7 @@ const router = express.Router();
 const {isLoggedIn} = require('../middleware/route.guard')
 const User = require('../models/User.model');
 const uploader = require('../middleware/cloudinary.config.js');
-const defaultImageUrl = "https://acortar.link/0n4qLw"
+const defaultImageUrl = "https://res.cloudinary.com/dgbg06crz/image/upload/v1683198511/fd3jxotsdqembzxobqn3.jpg"
 
 
 /* GET create page */
@@ -97,7 +97,7 @@ router.get("/:ageRange",  async (req, res, next) => {
   if(req.session.existingUser){
       isLogged = true
     }
-    const allArticles = await Article.find(req.params)
+    const allArticles = await Article.find(req.params).sort({createdAt: -1});
     res.render("articles/allarticles", {data: allArticles, isLogged})
   } catch (error) {
     console.log(error)

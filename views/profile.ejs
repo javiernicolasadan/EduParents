@@ -1,5 +1,4 @@
-<section>
-    <div class="profile">
+<section class="profile-data">
         <div class="profilePic">
             <img src="/images/profilePicDef.png" alt="">
         </div>
@@ -11,16 +10,37 @@
             <h4>Articles created: <%= currentUser.articles.length %></h4>
             <a href="/logout">Log Out</a>
         </div>
-    </div>
 </section>
 
-<section>
-    <h1 class="profile-section">View all the sections</h1>
-    <a href="/"><h4>Go to sections</h4></a>
+<section class="profile-section">
+    <h1 class="title-section">Favorites</h1>
+
+    <% if (currentUser.favorites[0]) { %>
+        <div class="articlesProfile">
+            <% currentUser.favorites.forEach(fav => { %>
+                <div class="profile-container">
+                    <div class="profile-container-function">
+                        <h3><%= fav.title %></h3>
+                        <form method="POST" action="/articles/fav/<%= fav._id %>/remove">
+                            <button type="submit">Remove</button>
+                        </form>
+                    </div>
+                    <a href=<%- `/articles/${fav.ageRange}/${fav.id}` %>>
+                        <img src="<%= fav.imageUrl %>" alt="">
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <h4>Your favorites section is empty. Start searching <a href="/">here</a></h4>
+    <% } %>
 </section>
-<section>
-    <h1 class="profile-section">Your created articles</h1>
-    <div class="articlesHomepage">
+
+
+
+<section class="profile-section">
+    <h1 class="title-section">Your created articles</h1>
+    <div class="articlesProfile">
         <div class="add-container">
             <h4>Create new article</h4>
             <a href="/articles/create">
@@ -30,10 +50,10 @@
         
         <% if (currentUser.articles[0]) { %>
             <% currentUser.articles.forEach(article => { %>
-                <div class="home-container">
+                <div class="profile-container">
                     <div class="profile-container-function">
                         <h3><%= article.title %></h3>
-                        <div>
+                        <div class="profile-two-buttons">
                             <a href="/articles/<%=article._id%>/delete">Delete</a>
                             <a href="/articles/edit-article/<%=article._id %>">Update</a>
                         </div>
@@ -53,31 +73,5 @@
     </div>
 </section>
 
-<section>
-    <h1 class="profile-section">Favorites</h1>
-    <div class="articlesHomepage">
-        
-        <% if (currentUser.favorites[0]) { %>
-            <% currentUser.favorites.forEach(fav => { %>
-                <div class="home-container">
-                    <div class="profile-container-function">
-                        <h3><%= fav.title %></h3>
-                    </div>
-                    
-                        <form method="POST" action="/articles/fav/<%= fav._id %>/remove">
-                            <button type="submit">Remove</button>
-                        </form>
-                
-                        
-                        <img src="<%= fav.imageUrl %>" alt="">
-                    </a>
-                    
-                </div>
-            <% }) %>
-            
-        <% }else{ %>
-            <h4>Your favorites section is empty</h4>
-        <% } %>
-    </div>
-</section>
+
 

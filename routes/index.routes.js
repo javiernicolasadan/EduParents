@@ -21,9 +21,14 @@ router.get("/profile",isLoggedIn, async(req, res, next) => {
   if(req.session.existingUser){
       isLogged = true
     }
-    
-    const currentUser = await User.findOne({username: req.session.existingUser.existingUser}).populate('articles').populate('favorites');
-    console.log(currentUser)
+    const currentUser = await User.findOne({username: req.session.existingUser.existingUser})
+    .populate({
+        path: 'articles',
+        options: {
+            sort: { createdAt: -1 }
+        }
+    })
+    .populate('favorites');
     res.render("profile", {currentUser, isLogged});
   }
   catch(error){
