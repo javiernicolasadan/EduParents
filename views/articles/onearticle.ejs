@@ -3,11 +3,12 @@
 <section class="articleDetails">
     <div class="header">
         <div>
-            <h1 class="profile-section">Title: <%= article.title  %></h1>
+            <h1 class="title-page">Section: <%= article.ageRange  %></h1>
+            <h1>Title: <%= article.title  %></h1>
             <h4>Created by: <%= article.createdBy.username %></h4> 
         </div>
 
-        <div class="profile-container-function isOwner">
+        <div class="pink-buttons-div isOwner">
             <form method="POST" action="/articles/fav/<%= article._id %>">
                 <button type="submit">Fav Article</button>
             </form>
@@ -27,7 +28,7 @@
 </section>
 
 <aside>
-    <h4>More articles in this section</h4>
+    <h2>More articles in this section</h2>
     <ul>
         <% allArticles.forEach(element => { %>
             <li><a href=<%- `/articles/${element.ageRange}/${element.id}` %>><%= element.title %></a></li>

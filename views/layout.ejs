@@ -7,13 +7,15 @@
     <title>EduParents</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
+  
   <nav>
-    <div class="homepage-nav">
+    <div class="logo-nav">
       <a href="/">
         <img src="/images/logo.png" alt="">
       </a>
     </div>
-    <div class="credentials-nav">
+
+    <div class="pink-buttons-div">
       <a href="/">Home Page</a>
       <!-- If statement for logged in -->
       <% if (!!isLogged) { %>
@@ -24,14 +26,11 @@
         <a href="/auth/register">Register</a>
          <% } %>
     </div>
-   
-
   </nav>
 
   <body>
     <%- body %>
     <script src="/js/script.js"></script>
    
-      
   </body>
 </html>

@@ -1,14 +1,31 @@
-<h1>Register</h1>
-<form action="/auth/register" method="post">
-    <label>Email adress:<input type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required></label>
-    <label>Username:<input type="text" name="username" required value="<% if (typeof errorMessage !== 'undefined') {%><%= data.username %><% } %>"></label>
-    <label>Password:<input type="password" name="password" required></label>
-    <button type="submit">Register for free!</button>
-</form>
+<div class="authDiv">
+    <div class="auth-details">
+        <h1 class="title-page">Register</h1>
 
-<% if (typeof errorMessage !== 'undefined') { %>
- <p><%- errorMessage %></p>
- <% if (errorMessage === 'This email already exists. Go to the Log-In page') { %>
-    <a href="/auth/login">Log In</a>
- <% } %>
-<% } %>
+        <form action="/auth/register" method="post">
+            <div class="form-input">
+                <label class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required>
+            </div>
+
+            <div class="form-input">
+                <label class="form-label">Username</label>
+                <input class="form-control" type="text" name="username" required value="<% if (typeof errorMessage !== 'undefined') {%><%= data.username %><% } %>">
+            </div>
+
+            <div class="form-input">
+                <label class="form-label">Password</label>
+                <input class="form-control" type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="submit-button">Register for free!</button>
+        </form>
+
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <p class="auth-error"><%- errorMessage %></p>
+            <% if (errorMessage === 'This email already exists. Go to the Log-In page') { %>
+               <a class="auth-error-button" href="/auth/login">Log In</a>
+            <% } %>
+           <% } %>
+    </div>
+</div>

@@ -4,7 +4,7 @@ const router = express.Router();
 const {isLoggedIn} = require('../middleware/route.guard')
 const User = require('../models/User.model');
 const uploader = require('../middleware/cloudinary.config.js');
-const defaultImageUrl = "https://acortar.link/0n4qLw"
+const defaultImageUrl = "https://res.cloudinary.com/dgbg06crz/image/upload/v1683198511/fd3jxotsdqembzxobqn3.jpg"
 
 
 /* GET create page */
@@ -47,10 +47,8 @@ router.post('/fav/:articleId', async(req,res,next) =>{
   const favArt = await Article.findById(articleId)
   const currentUser = req.session.existingUser.existingUser;
   const currentUserData = await User.findOne({ username: currentUser });
-  console.log('currentUser', currentUser, 'CurrentUserData', currentUserData)
   if(!currentUserData.favorites.includes(articleId)){
     const updUserData = await User.findByIdAndUpdate(currentUserData._id, { $push: { favorites: favArt } }, { new: true })
-    console.log(updUserData)
   }
   res.redirect('/profile')
 })
@@ -99,7 +97,7 @@ router.get("/:ageRange",  async (req, res, next) => {
   if(req.session.existingUser){
       isLogged = true
     }
-    const allArticles = await Article.find(req.params)
+    const allArticles = await Article.find(req.params).sort({createdAt: -1});
     res.render("articles/allarticles", {data: allArticles, isLogged})
   } catch (error) {
     console.log(error)
