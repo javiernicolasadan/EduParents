@@ -28,7 +28,10 @@
         <div class="form-input">
             <label class="form-label">Upload Image</label>
             <input class="form-control" type="file" name="imageUrl" accept="image/png, image/jpg">
+            <input type="hidden" name="originalImageUrl" value="<%= articleToEdit.imageUrl %>">
+            <img src="<%= articleToEdit.imageUrl %>" alt="Current image">
         </div>
+        
 
         <div class="form-input">
             <label class="form-label">Content</label>
