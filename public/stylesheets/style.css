@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/idealist-sans');
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -46,10 +47,21 @@ img{
 
 header{
   height: 70vh;
-  background-image: url('../images/coverPic.jpg');
+  background-image: url('../images/cover2.png');
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.logoLetter{
+  font-family: 'Idealist Sans', sans-serif;
+}
+
+.welcome-text{
+  color: grey;
+  text-align: center;
+  margin: 2rem 0;
+}
+
 
 .credentials-nav a{
   background-color: rgb(197, 148, 167);
@@ -61,7 +73,6 @@ header{
 
 #artByAge{
   padding-top: 2%;
-
   text-align: center;
 }
 
@@ -113,6 +124,34 @@ text-decoration: none;
 
 h3{
   color: white;
+}
+
+.authDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.auth-details{
+  margin-top: 2rem;
+  width: 50vw;
+  padding: 3rem;
+  border: solid 1px lightgray;
+  border-radius: 2rem;
+}
+
+.auth-error{
+  color: rgb(173, 105, 131);
+  font-weight: bold;
+}
+
+.auth-error-button{
+  background-color: rgb(197, 148, 167);
+  margin: 0 0.3rem;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
 }
 
 .profile{
