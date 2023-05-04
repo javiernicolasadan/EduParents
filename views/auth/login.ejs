@@ -1,14 +1,26 @@
-<h1>Log In</h1>
-<form action="/auth/login" method="post">
-    <label>Email adress:<input type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required></label>
-    <label>Password:<input type="password" name="password" required></label>
-    <button type="submit">Log In</button>
-</form>
+<div class="authDiv">
+    <div class="auth-details">
+        <h1 class="profile-section">Log In</h1>
 
+        <form action="/auth/login" method="post">
+            <div class="form-input">
+                <label class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required>
+            </div>
 
-<% if (typeof errorMessage !== 'undefined') { %>
-    <p><%- errorMessage %></p>
-    <% if (errorMessage === 'This email is not registered. Please go to the Register page') { %>
-       <a href="/auth/register">Register</a>
-    <% } %>
-   <% } %>
+            <div class="form-input">
+                <label class="form-label">Password</label>
+                <input class="form-control" type="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="submit-button">Log In</button>
+        </form>
+
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <p class="auth-error"><%- errorMessage %></p>
+            <% if (errorMessage === 'This email is not registered. Please go to the Register page') { %>
+            <a class="auth-error-button" href="/auth/register">Register</a>
+            <% } %>
+        <% } %>
+    </div>
+</div>
