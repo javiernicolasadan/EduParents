@@ -78,7 +78,7 @@ header{
 
 .articlesHomepage {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 23rem));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 0.333333fr));
   gap: 2rem;
   align-items: center;
 }

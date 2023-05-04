@@ -47,10 +47,8 @@ router.post('/fav/:articleId', async(req,res,next) =>{
   const favArt = await Article.findById(articleId)
   const currentUser = req.session.existingUser.existingUser;
   const currentUserData = await User.findOne({ username: currentUser });
-  console.log('currentUser', currentUser, 'CurrentUserData', currentUserData)
   if(!currentUserData.favorites.includes(articleId)){
     const updUserData = await User.findByIdAndUpdate(currentUserData._id, { $push: { favorites: favArt } }, { new: true })
-    console.log(updUserData)
   }
   res.redirect('/profile')
 })
@@ -81,8 +79,6 @@ router.get("/edit-article/:articleId", async (req, res) => {
 router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"), async (req, res) => {
   const ageRange = req.params.ageRange
   const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, {...req.body, imageUrl: req.file.path}, {new: true})
-  console.log("estebueno", updatedArt)
-  
   res.redirect(`/articles/${req.params.ageRange}/${req.params.articleId}`)
 })
 
