@@ -20,7 +20,7 @@ a {
   text-decoration: none;
   }
   
-  h3{
+h3{
     color: white;
   }
 
@@ -336,6 +336,10 @@ aside ul li a{
   border-radius: 0.3rem;
 }
 
+/*Tablets*/
+@media (min-width: 769px) {}
+/*Desktop*/
+@media (min-width: 1024px) {}
 
 
 

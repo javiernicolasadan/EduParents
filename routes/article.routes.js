@@ -67,14 +67,7 @@ router.post('/fav/:articleId/remove', async (req, res) => {
 })
 
 /*GET edits articles*/
-router.get("/edit-article/:articleId", async (req, res) => {
-  let isLogged = false
-  if(req.session.existingUser){
-      isLogged = true
-    }
-  const articleToEdit = await Article.findById(req.params.articleId)
-  res.render("articles/editarticle", {articleToEdit, isLogged})
-})
+ 
 
 router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"), async (req, res) => {
   let imageUrl;
