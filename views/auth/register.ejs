@@ -1,8 +1,8 @@
 <div class="authDiv">
     <div class="auth-details">
-        <h1 class="title-page">Register</h1>
+        <h1 class="title-page-register">Register</h1>
 
-        <form action="/auth/register" method="post">
+        <form class="form-register" action="/auth/register" method="post">
             <div class="form-input">
                 <label class="form-label">Email</label>
                 <input class="form-control" type="email" name="email" value="<% if (typeof errorMessage !== 'undefined') {%><%= data.email %><% } %>" required>

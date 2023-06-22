@@ -158,6 +158,28 @@ aside h2 {
   margin-bottom: 0;
   font-size: 1.4rem;
 }
+.form-control{
+  background-color: rgb(236, 236, 236);
+  width: 87%;
+  height: 1.5rem;
+  border: solid 1px lightgray;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+}
+.form-label {
+  font-family: 'Montserrat', sans-serif;
+}
+.form-register{
+ 
+  padding-top: 0.5rem;
+}
+.title-page-register{
+  font-family: 'Montserrat', sans-serif;
+  margin: 4rem 0 0.25rem 0;
+  color: #721D27;
+  font-size: 1.5rem;
+}
 
 /*Tablets*/
 @media (min-width: 769px) {}
