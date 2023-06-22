@@ -66,6 +66,7 @@ h3{
   font-family: 'Montserrat', sans-serif;
   margin-top: 0;
   
+  
 }
 
 .welcome-text{
@@ -92,7 +93,7 @@ h3{
              0 0  0 2px rgb(255,255,255),
              0.3em 0.3em 1em rgba(0,0,0,0.3);
   height: 15rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   overflow: hidden;
 }
 .home-container img{
@@ -102,7 +103,61 @@ h3{
   border-radius: 2rem;
 }
 
+.title-page {
+  font-family: 'Montserrat', sans-serif;
+  margin: 1rem 0 0.25rem 0;
+  color: #721D27;
+  font-size: 1.5rem;
+}
+.title-page-title {
+  margin-top: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+}
+.isOwner a, button{
+  background-color: #7CAC9F;
+  color: white;
+  border-radius: 0.3rem;
+  margin: 0.3rem 0;
+  padding: 0.2rem;
+  border: none;
+  font-size: medium;
+}
+.articleDetails .header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+ 
+}
+section p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+aside ul li{
+  list-style: square;
+  margin-top: 0.75rem;
+  
+}
 
+aside ul li a{
+  color: #721D27;
+  font-weight: 700;
+  font-size: large;
+  padding-top: 0;
+  
+  
+}
+aside li {
+  padding-top: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+aside h2 {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 0;
+  font-size: 1.4rem;
+}
 
 /*Tablets*/
 @media (min-width: 769px) {}
@@ -228,8 +283,9 @@ header{
 }
 
 .title-page{
-  margin: 3rem 0 2rem 0;
+  margin: 3rem 0 0 0;
   color: #721D27;
+  font-size: 3rem;
 }
 
 /* auth pages */
