@@ -12,9 +12,10 @@ nav {
 }
 
 .logo-nav img {
-  height: 4rem;
-  width: 18rem;
-  padding-bottom: 0.75rem;
+  height: 5rem;
+  width: 20rem;
+  padding-bottom: 0.12rem;
+  
 }
 
 img {
@@ -26,7 +27,7 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   height: 8rem;
-  margin-bottom: 0;
+  margin-top: 0.2rem;
 }
 a {
   text-decoration: none;
@@ -100,15 +101,16 @@ h3{
   margin-top: 0;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
+  
 }
 .isOwner a, button{
   background-color: #7CAC9F;
   color: white;
   border-radius: 0.3rem;
-  margin: 0.3rem 0;
-  padding: 0.2rem;
   border: none;
   font-size: medium;
+  margin-left: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 .articleDetails .header{
   display: flex;
@@ -168,11 +170,82 @@ aside h2 {
   justify-content: center;
 }
 .profilePic img {
-  height: 12rem;
-  width: 70vw;
+  height: 10rem;
+  width: 50vw;
   padding: 5%;
   border-radius: 50%;
+  
 }
+.profileInfo {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2rem;
+}
+.profileInfo a {
+    color: white;
+    background-color: rgb(197, 148, 167);
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+   
+    
+}
+.profile-section {
+  padding-top: 0.5rem;
+  border: solid 1px lightgray;
+  border-radius: 2rem;
+  background-color: rgb(230, 230, 230);
+  min-height: 15rem;
+  margin-bottom: 2rem;
+  
+  
+}
+.profile-section h3 {
+  font-size: 1.3rem;
+  color: #721D27;
+  padding-left: 0.5rem;
+  
+}
+.title-section {
+  color: #721D27;
+  font-family: 'Montserrat', sans-serif;
+  padding-left: 0.5rem;
+}
+.profile-container-function h3{
+  margin-bottom: 0.15rem;
+  
+}
+.profile-section img{
+  border-radius: 5%;
+  height: 15rem;
+  width: 100%;
+  
+  
+}
+.add-container a img{
+  width: 25%;
+  height: 25%;
+  padding-left: 1rem;
+}
+.add-container h4 {
+ font-family: 'Montserrat', sans-serif;
+ margin-left: 0.65rem;
+ margin-bottom: 0.15rem;
+}
+.profile-container-function a {
+  text-decoration: none;
+}
+.profile-two-buttons a{
+  background-color: rgb(175, 175, 175);
+  border: solid 1px lightgray;
+  border-radius: 0.3rem;
+  color: white;
+  margin-left: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.profile-two-buttons{
+  margin-bottom: 0.3rem;
+}
+
+
 
 /*Tablets*/
 @media (min-width: 769px) {}
@@ -220,6 +293,7 @@ img{
   padding-top: 0.5rem;
   height: 4rem;
   margin-left: 0.5rem;
+  
 }
 
 nav {
@@ -261,6 +335,11 @@ header{
   color: grey;
   text-align: center;
   margin: 3rem 0;
+
+}
+.welcome-text p {
+  font-size: 1.2rem;
+  
 }
 
 
