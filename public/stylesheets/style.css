@@ -43,6 +43,7 @@ h3{
   color: white;
   padding: 0.5rem;
   border-radius: 0.3rem;
+ 
 }
 
 .logoLetter{
@@ -117,6 +118,7 @@ h3{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 section p {
@@ -242,8 +244,18 @@ aside h2 {
   font-family: 'Montserrat', sans-serif;
 }
 .profile-two-buttons{
-  margin-bottom: 0.3rem;
+  margin: 0.3rem;
+  padding: 0.3rem;
 }
+
+.pink-buttons-div button{
+  margin-bottom: 0.5rem;
+
+}
+.articleDetails h4{
+  font-family: 'Montserrat', sans-serif;
+}
+
 
 
 

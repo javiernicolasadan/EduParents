@@ -14,8 +14,8 @@
             </form>
 
             <% if (owner === currentUser) { %>
-                <a href="/articles/edit-article/<%=article._id %>">Update Article</a>
-                <a href="/articles/<%=article._id%>/delete">Delete Article</a>
+                <a class="button-one-article" href="/articles/edit-article/<%=article._id %>">Update Article</a>
+                <a class="button-one-article" href="/articles/<%=article._id%>/delete">Delete Article</a>
             <% } %>
         </div>
     </div>
