@@ -72,6 +72,12 @@ h3{
   font-size: 0.8rem;
 }
 
+.articlesHomepage{
+  display: grid;
+  grid-template-columns: repeat(2, 0.5fr);
+  grid-gap: 10px;
+}
+
 .home-container {
   background-color: lightgrey;
   border-radius: 2rem;
@@ -81,7 +87,7 @@ h3{
        inset 0 -3em 3em rgba(0,0,0,0.1),
              0 0  0 2px rgb(255,255,255),
              0.3em 0.3em 1em rgba(0,0,0,0.3);
-  height: 15rem;
+  height: 10rem;
   margin-top: 1rem;
   overflow: hidden;
 }
@@ -90,6 +96,10 @@ h3{
   height: 100%;
   object-fit: cover;
   border-radius: 2rem;
+}
+
+.home-container h3{
+  margin: 0.3rem;
 }
 
 .title-page {
@@ -274,10 +284,10 @@ aside h2 {
 
 
 
-/*Tablets*/
-@media (min-width: 769px) {}
 /*Desktop*/
-@media (min-width: 1024px) {
+@media (min-width: 1024px) {}
+/*Tablet*/
+@media (min-width: 769px) {
   
 body {
   font-family: 'Montserrat', sans-serif;
@@ -398,6 +408,10 @@ header{
   height: 100%;
   object-fit: cover;
   border-radius: 2rem;
+}
+
+.home-container h3{
+  margin: 1rem;
 }
 
 .title-page{
