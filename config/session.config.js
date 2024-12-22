@@ -18,7 +18,8 @@ module.exports = app => {
         maxAge: 3600000 // 1 hour
       },
       store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/project2"
+        //mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/project2"
+        mongoUrl: "mongodb://127.0.0.1:27017/project2"
  
       })
     })
