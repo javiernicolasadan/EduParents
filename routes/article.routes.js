@@ -67,20 +67,32 @@ router.post('/fav/:articleId/remove', async (req, res) => {
 })
 
 /*GET edits articles*/
- 
-
-router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"), async (req, res) => {
-  let imageUrl;
-  if (req.file) {
-    imageUrl = req.file.path;
-  } else {
-    imageUrl = req.body.originalImageUrl;
+router.get("/edit-article/:articleId", async (req, res) => {
+  let isLogged = false;
+  if (req.session.existingUser) {
+    isLogged = true;
   }
-  const ageRange = req.params.ageRange
-  const updatedArt = await Article.findByIdAndUpdate(req.params.articleId, {...req.body, imageUrl: imageUrl}, {new: true})
-  
-  res.redirect(`/articles/${req.params.ageRange}/${req.params.articleId}`)
-})
+  const articleToEdit = await Article.findById(req.params.articleId);
+  res.render("articles/editarticle", { articleToEdit, isLogged });
+});
+
+router.post(
+  "/edit-article/:ageRange/:articleId",
+  uploader.single("imageUrl"),
+  async (req, res) => {
+    let imageUrl;
+    if (req.file) {
+      imageUrl = req.file.path;
+    } else {
+      imageUrl = req.body.originalImageUrl;
+    }
+    const ageRange = req.params.ageRange;
+    const updatedArt = await Article.findByIdAndUpdate(
+      req.params.articleId,
+      { ...req.body, imageUrl: imageUrl },
+      { new: true }
+    );
+  })
 
 
 /*GET all articles*/

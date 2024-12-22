@@ -1,7 +1,13 @@
 <div class="title-div">
-  <h1 class="title-page">
-  <%= data[0].ageRange %> Articles
-</h1>
+  <% if (data.length > 0) { %>
+    <h1 class="title-page">
+      <%= data[0].ageRange %> Articles
+    </h1>
+  <% } else { %>
+    <h1 class="title-page">
+      No articles available for this age range.
+    </h1>
+  <% } %>
 </div>
 
 
