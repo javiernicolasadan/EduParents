@@ -153,11 +153,16 @@ router.get('/:ageRange/:articleId', async (req, res) => {
       currentUser = req.session.existingUser.existingUser
     }
     const allArticles = await Article.find({ageRange: req.params.ageRange})
+    //console.log("allArticles:", allArticles);
     const article = await Article.findById(req.params.articleId).populate('createdBy', 'username');
-    const owner = article.createdBy.username
+    //console.log("article:", article);
+    const owner = article.createdBy ? article.createdBy.username : null
+    console.log("owner:", owner);
+    //console.log("createdBy:", article ? article.createdBy : "No creado por nadie");
     if (!article) {
-      res.redirect('/articles');
+      return res.redirect('/articles');
     } else {
+      
       res.render('articles/onearticle', { article: article, isLogged, allArticles, owner, currentUser});
     }
   } catch (error) {

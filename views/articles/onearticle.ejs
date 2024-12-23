@@ -13,7 +13,7 @@
                 <button type="submit">Fav Article</button>
             </form>
 
-            <% if (owner && currentUser && owner._id.toString() === currentUser._id.toString()) { %>
+            <% if (owner && currentUser && owner === currentUser.username) { %>
                 <a class="button-one-article" href="/articles/edit-article/<%=article._id %>">Update Article</a>
                 <a class="button-one-article" href="/articles/<%=article._id%>/delete">Delete Article</a>
             <% } %>
