@@ -76,23 +76,47 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", { articleToEdit, isLogged });
 });
 
-router.post(
-  "/edit-article/:ageRange/:articleId",
-  uploader.single("imageUrl"),
+router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
   async (req, res) => {
-    let imageUrl;
-    if (req.file) {
-      imageUrl = req.file.path;
-    } else {
-      imageUrl = req.body.originalImageUrl;
+    //console.log("req.params", req.params);
+    try {
+      // Determinar si hay una nueva imagen o usar la original
+      let imageUrl;
+      if (req.file) {
+        imageUrl = req.file.path;
+      } else {
+        imageUrl = req.body.originalImageUrl;
+      }
+      const ageRange = req.params.ageRange;
+
+      // Actualizar el artículo
+      const updatedArt = await Article.findByIdAndUpdate(
+        req.params.articleId,
+        { ...req.body, imageUrl: imageUrl },
+        { new: true }
+      );
+
+      if (!updatedArt) {
+        // Si no se encuentra el artículo, devuelve un error
+        return res.status(404).json({ message: "Article not found" });
+      }
+      const allArticles = await Article.find({ ageRange: req.params.ageRange });
+      const article = await Article.findById(req.params.articleId).populate("createdBy");
+      const owner = article.createdBy.username;
+      const currentUser = req.session.currentUser
+      //console.log("article", article.createdBy.username);
+      // Redirigir o responder con los datos actualizados
+      res.render("articles/onearticle", { article: updatedArt, allArticles, ageRange, owner, currentUser,isLogged: !!req.session.currentUser, });
+      
+    } catch (error) {
+      console.error("Error updating article:", error);
+      res.status(500).json({ message: "Internal Server Error", error });
     }
-    const ageRange = req.params.ageRange;
-    const updatedArt = await Article.findByIdAndUpdate(
-      req.params.articleId,
-      { ...req.body, imageUrl: imageUrl },
-      { new: true }
-    );
-  })
+  }
+);
+
+  
+
 
 
 /*GET all articles*/
