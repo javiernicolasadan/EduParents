@@ -1,7 +1,7 @@
 ### eduParents
 
-[Deployment Link](https://eduparents.onrender.com/)
-[Deployment Link](https://www.loom.com/share/7564be8ae9984e44826bdebaa6ae551f?sid=b493add4-86ca-45c1-87be-a0b818949de1))
+[Deployment Link](https://eduparents.onrender.com/)  
+[Demo](https://www.loom.com/share/7564be8ae9984e44826bdebaa6ae551f?sid=b493add4-86ca-45c1-87be-a0b818949de1)
 
 
 ## Description
