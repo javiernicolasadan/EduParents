@@ -1,6 +1,8 @@
 ### eduParents
 
-https://eduparents.adaptable.app/
+[Deployment Link](https://eduparents.onrender.com/)
+[Deployment Link]([https://eduparents.onrender.com/](https://www.loom.com/share/7564be8ae9984e44826bdebaa6ae551f?sid=b493add4-86ca-45c1-87be-a0b818949de1))
+
 
 ## Description
 
@@ -91,4 +93,4 @@ Article model
 [Wireframe](https://wireframepro.mockflow.com/view/MRaGnBDLHh)
 [Slides Link](https://docs.google.com/presentation/d/1pm14WBY6rZ-zvkQ9VUd_mQN10QVGytGkzA8_jyk5NQM/edit?usp=sharing)
 [GitHub repo link](https://github.com/eliexme/EduParents)
-[Deployment Link](https://eduparents.adaptable.app/)
+[Deployment Link](https://eduparents.onrender.com/)
