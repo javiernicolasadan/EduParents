@@ -17,20 +17,15 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 });
 
 // POST create
-router.post(
-  "/create",
-  isLoggedIn,
-  uploader.single("imageUrl"),
+router.post("/create", isLoggedIn, uploader.single("imageUrl"),
   async (req, res, next) => {
     try {
-      let isLogged = false;
-      if (req.session.existingUser) {
-        isLogged = true;
-      }
+      const isLogged = req.session?.existingUser ? true : false;
+      
       console.log("Session data:", req.session);
       console.log("Request body:", req.body);
       console.log("File data:", req.file);
-      console.log("User found:", ownerId);
+      
 
       const ownerUser = req.session?.existingUser?.existingUser;
       if (!ownerUser) {
@@ -42,13 +37,10 @@ router.post(
         throw new Error("Usuario no encontrado en la base de datos.");
       }
       const ownerId = owner._id;
+      console.log("User found:", ownerId);
 
-      let imageUrl;
-      if (req.file) {
-        imageUrl = req.file.path;
-      } else {
-        imageUrl = defaultImageUrl;
-      }
+      const imageUrl = req.file ? req.file.path : defaultImageUrl;
+
       const newArticle = await Article.create({
         ...req.body,
         createdBy: ownerId,
@@ -62,7 +54,7 @@ router.post(
       );
       res.redirect(`/articles/${ageRange}/${_id}`);
     } catch (error) {
-      console.log(error);
+      console.error("Error al crear el artículo:", error.message);
       next(error); // si ocurre un error, lo pasamos al siguiente middleware
     }
   }
@@ -111,9 +103,7 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", { articleToEdit, isLogged });
 });
 
-router.post(
-  "/edit-article/:ageRange/:articleId",
-  uploader.single("imageUrl"),
+router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
   async (req, res) => {
     //console.log("req.params", req.params);
     try {
@@ -187,25 +177,23 @@ router.get("/:articleId/delete", async (req, res) => {
 /* GET one article */
 router.get("/:ageRange/:articleId", async (req, res) => {
   try {
-    let isLogged = false;
-    let currentUser;
-    if (req.session.existingUser) {
-      isLogged = true;
-      currentUser = req.session.existingUser.existingUser;
-    }
+    const isLogged = req.session?.existingUser ? true : false;
+    const currentUser = req.session?.existingUser?.existingUser || null;
+
     const allArticles = await Article.find({ ageRange: req.params.ageRange });
     //console.log("allArticles:", allArticles);
     const article = await Article.findById(req.params.articleId).populate(
       "createdBy",
       "username"
     );
+    if (!article) {
+      return res.redirect("/articles");
+    } 
     //console.log("article:", article);
     const owner = article.createdBy ? article.createdBy.username : null;
     console.log("owner:", owner);
     //console.log("createdBy:", article ? article.createdBy : "No creado por nadie");
-    if (!article) {
-      return res.redirect("/articles");
-    } else {
+     
       res.render("articles/onearticle", {
         article: article,
         isLogged,
@@ -213,9 +201,10 @@ router.get("/:ageRange/:articleId", async (req, res) => {
         owner,
         currentUser,
       });
-    }
+    
   } catch (error) {
-    console.log(error);
+    console.error("Error al obtener el artículo:", error.message);
+    res.redirect("/articles"); 
   }
 });
 
