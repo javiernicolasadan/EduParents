@@ -1,70 +1,96 @@
-const express = require('express');
-const Article = require('../models/Article.model');
+const express = require("express");
+const Article = require("../models/Article.model");
 const router = express.Router();
-const {isLoggedIn} = require('../middleware/route.guard')
-const User = require('../models/User.model');
-const uploader = require('../middleware/cloudinary.config.js');
-const defaultImageUrl = "https://res.cloudinary.com/dgbg06crz/image/upload/v1683198511/fd3jxotsdqembzxobqn3.jpg"
-
+const { isLoggedIn } = require("../middleware/route.guard");
+const User = require("../models/User.model");
+const uploader = require("../middleware/cloudinary.config.js");
+const defaultImageUrl =
+  "https://res.cloudinary.com/dgbg06crz/image/upload/v1683198511/fd3jxotsdqembzxobqn3.jpg";
 
 /* GET create page */
 router.get("/create", isLoggedIn, (req, res, next) => {
-  let isLogged = false
-  if(req.session.existingUser){
-      isLogged = true
-    }
-  res.render("articles/createarticle", {isLogged});
+  let isLogged = false;
+  if (req.session.existingUser) {
+    isLogged = true;
+  }
+  res.render("articles/createarticle", { isLogged });
 });
 
 // POST create
-router.post("/create", isLoggedIn, uploader.single("imageUrl"), async (req, res, next) => {
-  try {
-    let isLogged = false;
-    if (req.session.existingUser) {
-      isLogged = true;
+router.post(
+  "/create",
+  isLoggedIn,
+  uploader.single("imageUrl"),
+  async (req, res, next) => {
+    try {
+      let isLogged = false;
+      if (req.session.existingUser) {
+        isLogged = true;
+      }
+      console.log("Session data:", req.session);
+      console.log("Request body:", req.body);
+      console.log("File data:", req.file);
+      console.log("User found:", ownerId);
+
+      const ownerUser = req.session.existingUser.existingUser;
+      const ownerId = await User.findOne({ username: ownerUser });
+      let imageUrl;
+      if (req.file) {
+        imageUrl = req.file.path;
+      } else {
+        imageUrl = defaultImageUrl;
+      }
+      const newArticle = await Article.create({
+        ...req.body,
+        createdBy: ownerId,
+        imageUrl: imageUrl,
+      });
+      const { _id, ageRange } = newArticle;
+      await User.findByIdAndUpdate(
+        ownerId,
+        { $push: { articles: newArticle } },
+        { new: true }
+      );
+      res.redirect(`/articles/${ageRange}/${_id}`);
+    } catch (error) {
+      console.log(error);
+      next(error); // si ocurre un error, lo pasamos al siguiente middleware
     }
-    const ownerUser = req.session.existingUser.existingUser;
-    const ownerId = await User.findOne({ username: ownerUser });
-    let imageUrl;
-    if (req.file) {
-      imageUrl = req.file.path;
-    } else {
-      imageUrl = defaultImageUrl;
-    }
-    const newArticle = await Article.create({ ...req.body, createdBy: ownerId, imageUrl: imageUrl });
-    const { _id, ageRange } = newArticle;
-    await User.findByIdAndUpdate(ownerId, { $push: { articles: newArticle } }, { new: true });
-    res.redirect(`/articles/${ageRange}/${_id}`);
-  } catch (error) {
-    console.log(error);
-    next(error); // si ocurre un error, lo pasamos al siguiente middleware
   }
-});
+);
 
 /* POST one favorite */
-router.post('/fav/:articleId', async(req,res,next) =>{
-  const articleId = req.params.articleId
-  const favArt = await Article.findById(articleId)
+router.post("/fav/:articleId", async (req, res, next) => {
+  const articleId = req.params.articleId;
+  const favArt = await Article.findById(articleId);
   const currentUser = req.session.existingUser.existingUser;
   const currentUserData = await User.findOne({ username: currentUser });
-  if(!currentUserData.favorites.includes(articleId)){
-    const updUserData = await User.findByIdAndUpdate(currentUserData._id, { $push: { favorites: favArt } }, { new: true })
+  if (!currentUserData.favorites.includes(articleId)) {
+    const updUserData = await User.findByIdAndUpdate(
+      currentUserData._id,
+      { $push: { favorites: favArt } },
+      { new: true }
+    );
   }
-  res.redirect('/profile')
-})
+  res.redirect("/profile");
+});
 
 /* POST one favorite to delete */
-router.post('/fav/:articleId/remove', async (req, res) => {
+router.post("/fav/:articleId/remove", async (req, res) => {
   try {
     const currentUser = req.session.existingUser.existingUser;
     const currentUserData = await User.findOne({ username: currentUser });
     const articleId = req.params.articleId;
-    await User.findByIdAndUpdate(currentUserData._id, { $pull: { favorites: articleId } }, { new: true });
-    res.redirect('/profile')
+    await User.findByIdAndUpdate(
+      currentUserData._id,
+      { $pull: { favorites: articleId } },
+      { new: true }
+    );
+    res.redirect("/profile");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
+});
 
 /*GET edits articles*/
 router.get("/edit-article/:articleId", async (req, res) => {
@@ -76,7 +102,9 @@ router.get("/edit-article/:articleId", async (req, res) => {
   res.render("articles/editarticle", { articleToEdit, isLogged });
 });
 
-router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
+router.post(
+  "/edit-article/:ageRange/:articleId",
+  uploader.single("imageUrl"),
   async (req, res) => {
     //console.log("req.params", req.params);
     try {
@@ -101,13 +129,21 @@ router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
         return res.status(404).json({ message: "Article not found" });
       }
       const allArticles = await Article.find({ ageRange: req.params.ageRange });
-      const article = await Article.findById(req.params.articleId).populate("createdBy");
+      const article = await Article.findById(req.params.articleId).populate(
+        "createdBy"
+      );
       const owner = article.createdBy.username;
-      const currentUser = req.session.currentUser
+      const currentUser = req.session.currentUser;
       //console.log("article", article.createdBy.username);
       // Redirigir o responder con los datos actualizados
-      res.render("articles/onearticle", { article: updatedArt, allArticles, ageRange, owner, currentUser,isLogged: !!req.session.currentUser, });
-      
+      res.render("articles/onearticle", {
+        article: updatedArt,
+        allArticles,
+        ageRange,
+        owner,
+        currentUser,
+        isLogged: !!req.session.currentUser,
+      });
     } catch (error) {
       console.error("Error updating article:", error);
       res.status(500).json({ message: "Internal Server Error", error });
@@ -115,55 +151,59 @@ router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
   }
 );
 
-  
-
-
-
 /*GET all articles*/
-router.get("/:ageRange",  async (req, res, next) => {
-  try {
-    let isLogged = false
-  if(req.session.existingUser){
-      isLogged = true
-    }
-    const allArticles = await Article.find(req.params).sort({createdAt: -1});
-    res.render("articles/allarticles", {data: allArticles, isLogged})
-  } catch (error) {
-    console.log(error)
-  }
- });
-
-/* POST one article to delete */
-router.get('/:articleId/delete', async (req, res) => {
-  try {
-    await Article.findByIdAndDelete(req.params.articleId)
-    res.redirect('/profile')
-    } catch (error) {
-    console.log(error)
-  }
-})
-
-/* GET one article */
-router.get('/:ageRange/:articleId', async (req, res) => {
+router.get("/:ageRange", async (req, res, next) => {
   try {
     let isLogged = false;
-    let currentUser
     if (req.session.existingUser) {
       isLogged = true;
-      currentUser = req.session.existingUser.existingUser
     }
-    const allArticles = await Article.find({ageRange: req.params.ageRange})
+    const allArticles = await Article.find(req.params).sort({ createdAt: -1 });
+    res.render("articles/allarticles", { data: allArticles, isLogged });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/* POST one article to delete */
+router.get("/:articleId/delete", async (req, res) => {
+  try {
+    await Article.findByIdAndDelete(req.params.articleId);
+    res.redirect("/profile");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/* GET one article */
+router.get("/:ageRange/:articleId", async (req, res) => {
+  try {
+    let isLogged = false;
+    let currentUser;
+    if (req.session.existingUser) {
+      isLogged = true;
+      currentUser = req.session.existingUser.existingUser;
+    }
+    const allArticles = await Article.find({ ageRange: req.params.ageRange });
     //console.log("allArticles:", allArticles);
-    const article = await Article.findById(req.params.articleId).populate('createdBy', 'username');
+    const article = await Article.findById(req.params.articleId).populate(
+      "createdBy",
+      "username"
+    );
     //console.log("article:", article);
-    const owner = article.createdBy ? article.createdBy.username : null
+    const owner = article.createdBy ? article.createdBy.username : null;
     console.log("owner:", owner);
     //console.log("createdBy:", article ? article.createdBy : "No creado por nadie");
     if (!article) {
-      return res.redirect('/articles');
+      return res.redirect("/articles");
     } else {
-      
-      res.render('articles/onearticle', { article: article, isLogged, allArticles, owner, currentUser});
+      res.render("articles/onearticle", {
+        article: article,
+        isLogged,
+        allArticles,
+        owner,
+        currentUser,
+      });
     }
   } catch (error) {
     console.log(error);
