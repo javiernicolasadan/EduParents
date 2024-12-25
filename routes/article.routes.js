@@ -32,8 +32,17 @@ router.post(
       console.log("File data:", req.file);
       console.log("User found:", ownerId);
 
-      const ownerUser = req.session.existingUser.existingUser;
-      const ownerId = await User.findOne({ username: ownerUser });
+      const ownerUser = req.session?.existingUser?.existingUser;
+      if (!ownerUser) {
+        throw new Error("El usuario no está disponible en la sesión.");
+      }
+
+      const owner = await User.findOne({ username: ownerUser });
+      if (!owner) {
+        throw new Error("Usuario no encontrado en la base de datos.");
+      }
+      const ownerId = owner._id;
+
       let imageUrl;
       if (req.file) {
         imageUrl = req.file.path;
