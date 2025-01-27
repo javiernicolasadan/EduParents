@@ -90,7 +90,7 @@ Article model
 
 ## Links
 
-[Wireframe](https://wireframepro.mockflow.com/view/MRaGnBDLHh)
-[Slides Link](https://docs.google.com/presentation/d/1pm14WBY6rZ-zvkQ9VUd_mQN10QVGytGkzA8_jyk5NQM/edit?usp=sharing)
-[GitHub repo link](https://github.com/eliexme/EduParents)
-[Deployment Link](https://eduparents.onrender.com/)
+[Wireframe](https://wireframepro.mockflow.com/view/MRaGnBDLHh)  
+[Slides Link](https://docs.google.com/presentation/d/1pm14WBY6rZ-zvkQ9VUd_mQN10QVGytGkzA8_jyk5NQM/edit?usp=sharing)  
+[GitHub repo link](https://github.com/eliexme/EduParents)  
+[Deployment Link](https://eduparents.onrender.com/)  
