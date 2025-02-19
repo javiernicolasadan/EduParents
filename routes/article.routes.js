@@ -1,31 +1,39 @@
 const express = require("express");
 const Article = require("../models/Article.model");
 const router = express.Router();
-const { isLoggedIn } = require("../middleware/route.guard");
+const { isLoggedIn } = require("../middleware/auth.middleware");
 const User = require("../models/User.model");
 const uploader = require("../middleware/cloudinary.config.js");
 const defaultImageUrl =
   "https://res.cloudinary.com/dgbg06crz/image/upload/v1683198511/fd3jxotsdqembzxobqn3.jpg";
 
+// Función helper al inicio del archivo
+const getUserFromSession = (req) => {
+  return req.session?.existingUser?.existingUser || null;
+};
+
+const isUserLoggedIn = (req) => {
+  return !!req.session?.existingUser;
+};
+
 /* GET create page */
 router.get("/create", isLoggedIn, (req, res, next) => {
-  let isLogged = false;
-  if (req.session.existingUser) {
-    isLogged = true;
-  }
+  const isLogged = isUserLoggedIn(req);
   res.render("articles/createarticle", { isLogged });
 });
 
 // POST create
-router.post("/create", isLoggedIn, uploader.single("imageUrl"),
+router.post(
+  "/create",
+  isLoggedIn,
+  uploader.single("imageUrl"),
   async (req, res, next) => {
     try {
-      const isLogged = req.session?.existingUser ? true : false;
-      
+      const isLogged = isUserLoggedIn(req);
+
       console.log("Session data:", req.session);
       console.log("Request body:", req.body);
       console.log("File data:", req.file);
-      
 
       const ownerUser = req.session?.existingUser?.existingUser;
       if (!ownerUser) {
@@ -61,10 +69,10 @@ router.post("/create", isLoggedIn, uploader.single("imageUrl"),
 );
 
 /* POST one favorite */
-router.post("/fav/:articleId", async (req, res, next) => {
+router.post("/fav/:articleId", isLoggedIn, async (req, res, next) => {
   const articleId = req.params.articleId;
   const favArt = await Article.findById(articleId);
-  const currentUser = req.session.existingUser?.existingUser || null;
+  const currentUser = getUserFromSession(req);
   const currentUserData = await User.findOne({ username: currentUser });
   if (!currentUserData.favorites.includes(articleId)) {
     const updUserData = await User.findByIdAndUpdate(
@@ -77,9 +85,9 @@ router.post("/fav/:articleId", async (req, res, next) => {
 });
 
 /* POST one favorite to delete */
-router.post("/fav/:articleId/remove", async (req, res) => {
+router.post("/fav/:articleId/remove", isLoggedIn, async (req, res) => {
   try {
-    const currentUser = req.session.existingUser?.existingUser || null;
+    const currentUser = getUserFromSession(req);
     const currentUserData = await User.findOne({ username: currentUser });
     const articleId = req.params.articleId;
     await User.findByIdAndUpdate(
@@ -94,16 +102,15 @@ router.post("/fav/:articleId/remove", async (req, res) => {
 });
 
 /*GET edits articles*/
-router.get("/edit-article/:articleId", async (req, res) => {
-  let isLogged = false;
-  if (req.session.existingUser) {
-    isLogged = true;
-  }
+router.get("/edit-article/:articleId", isLoggedIn, async (req, res) => {
+  const isLogged = isUserLoggedIn(req);
   const articleToEdit = await Article.findById(req.params.articleId);
   res.render("articles/editarticle", { articleToEdit, isLogged });
 });
 
-router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
+router.post(
+  "/edit-article/:ageRange/:articleId",
+  uploader.single("imageUrl"),
   async (req, res) => {
     //console.log("req.params", req.params);
     try {
@@ -132,7 +139,7 @@ router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
         "createdBy"
       );
       const owner = article.createdBy.username;
-      const currentUser = req.session.currentUser;
+      const currentUser = getUserFromSession(req);
       //console.log("article", article.createdBy.username);
       // Redirigir o responder con los datos actualizados
       res.render("articles/onearticle", {
@@ -141,7 +148,7 @@ router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
         ageRange,
         owner,
         currentUser,
-        isLogged: !!req.session.currentUser,
+        isLogged: !!req.session.existingUser,
       });
     } catch (error) {
       console.error("Error updating article:", error);
@@ -153,10 +160,7 @@ router.post("/edit-article/:ageRange/:articleId", uploader.single("imageUrl"),
 /*GET all articles*/
 router.get("/:ageRange", async (req, res, next) => {
   try {
-    let isLogged = false;
-    if (req.session.existingUser) {
-      isLogged = true;
-    }
+    const isLogged = isUserLoggedIn(req);
     const allArticles = await Article.find(req.params).sort({ createdAt: -1 });
     res.render("articles/allarticles", { data: allArticles, isLogged });
   } catch (error) {
@@ -177,9 +181,13 @@ router.get("/:articleId/delete", async (req, res) => {
 /* GET one article */
 router.get("/:ageRange/:articleId", async (req, res) => {
   try {
-    const isLogged = req.session?.existingUser ? true : false;
+    const isLogged = isUserLoggedIn(req);
     let currentUser = null;
-    if (req.session && req.session.existingUser && req.session.existingUser.existingUser) {
+    if (
+      req.session &&
+      req.session.existingUser &&
+      req.session.existingUser.existingUser
+    ) {
       currentUser = req.session.existingUser.existingUser;
     }
 
@@ -191,23 +199,22 @@ router.get("/:ageRange/:articleId", async (req, res) => {
     );
     if (!article) {
       return res.redirect("/articles");
-    } 
+    }
     //console.log("article:", article);
     const owner = article.createdBy ? article.createdBy.username : null;
     console.log("owner:", owner);
     //console.log("createdBy:", article ? article.createdBy : "No creado por nadie");
-     
-      res.render("articles/onearticle", {
-        article: article,
-        isLogged,
-        allArticles,
-        owner,
-        currentUser,
-      });
-    
+
+    res.render("articles/onearticle", {
+      article: article,
+      isLogged,
+      allArticles,
+      owner,
+      currentUser,
+    });
   } catch (error) {
     console.error("Error al obtener el artículo:", error.message);
-    res.redirect("/articles"); 
+    res.redirect("/articles");
   }
 });
 
