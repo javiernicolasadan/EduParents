@@ -64,7 +64,7 @@ router.post("/create", isLoggedIn, uploader.single("imageUrl"),
 router.post("/fav/:articleId", async (req, res, next) => {
   const articleId = req.params.articleId;
   const favArt = await Article.findById(articleId);
-  const currentUser = req.session.existingUser.existingUser;
+  const currentUser = req.session.existingUser?.existingUser || null;
   const currentUserData = await User.findOne({ username: currentUser });
   if (!currentUserData.favorites.includes(articleId)) {
     const updUserData = await User.findByIdAndUpdate(
@@ -79,7 +79,7 @@ router.post("/fav/:articleId", async (req, res, next) => {
 /* POST one favorite to delete */
 router.post("/fav/:articleId/remove", async (req, res) => {
   try {
-    const currentUser = req.session.existingUser.existingUser;
+    const currentUser = req.session.existingUser?.existingUser || null;
     const currentUserData = await User.findOne({ username: currentUser });
     const articleId = req.params.articleId;
     await User.findByIdAndUpdate(
@@ -178,7 +178,10 @@ router.get("/:articleId/delete", async (req, res) => {
 router.get("/:ageRange/:articleId", async (req, res) => {
   try {
     const isLogged = req.session?.existingUser ? true : false;
-    const currentUser = req.session?.existingUser?.existingUser || null;
+    let currentUser = null;
+    if (req.session && req.session.existingUser && req.session.existingUser.existingUser) {
+      currentUser = req.session.existingUser.existingUser;
+    }
 
     const allArticles = await Article.find({ ageRange: req.params.ageRange });
     //console.log("allArticles:", allArticles);
